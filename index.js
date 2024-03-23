@@ -1,24 +1,39 @@
-const hourEl =document.getElementById("hour");
-const minuteEl=document.getElementById("minutes");
-const secondEl=document.getElementById("seconds");
-const ampm =document.getElementById("ampm");
+const hourEl = document.getElementById("hour");
+const minuteEl = document.getElementById("minutes");
+const secondEl = document.getElementById("seconds");
+const ampmEl = document.getElementById("ampm");
+const body = document.body;
 
-function updateclock(){
-  let h = new Date().getHours()
-  let m = new Date().getMinutes()
-  let s =new Date().getSeconds()
-  let ampm = "AM"
+function updateClock() {
+  const now = new Date();
+  let h = now.getHours();
+  let m = now.getMinutes();
+  let s = now.getSeconds();
+  let ampmIndicator = "AM";
 
-  if(h>12){
-    h = h-12
-    ampm="PM"
+  if (h >= 12) {
+    h = h - 12;
+    ampmIndicator = "PM";
   }
+
+  // Add leading zeros if needed
+  h = h < 10 ? "0" + h : h;
+  m = m < 10 ? "0" + m : m;
+  s = s < 10 ? "0" + s : s;
+
   hourEl.innerText = h;
-  minuteEl.innerText =m;
-  secondEl.innerText =s;
-  ampmEl,(innerText =ampm);
-  setTimeout(() =>{
-    updateclock()
-  }, 1000)
+  minuteEl.innerText = m;
+  secondEl.innerText = s;
+  ampmEl.innerText = ampmIndicator;
+
+  // Update background color based on AM/PM
+  if (ampmIndicator === "AM") {
+    body.style.backgroundColor = "#f0f0f0"; // Change to your desired AM background color
+  } else {
+    body.style.backgroundColor = "#000000"; // Change to your desired PM background color
+  }
+
+  setTimeout(updateClock, 1000);
 }
-updateclock()
+
+updateClock();
